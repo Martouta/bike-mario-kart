@@ -32,6 +32,7 @@ These are the libraries that you need to download:
 ### Circuit
 General schematics:
 ![Fritzing Circuit](./FritzingProtoboard.png)
+You can also download the file for Fritzing with more details of the schematics in the [Fritzing Project site](https://fritzing.org/projects/real-bike-mario-kart-8-deluxe).
 
 In the front side there are the _GY-521_ almost right in the middle of the rotation (or at least enough like to detect the rotation well) and the buttons.
 ![Bike front side](./bikefrontside.png)
@@ -122,7 +123,7 @@ If it works, at the end of the upload, you should see a message similar to this 
 
 ## How to play
 First, you need to know how to play the game itself with the JoyCons. There are many good tutorials out there, but this is how to play in a nutshell:
-![Mario Kart 8 Deluxe Basic Controls](mariokartdeluxebasiccontrols.jpg)
+![Mario Kart 8 Deluxe Basic Controls](./mariokartdeluxebasiccontrols.jpg)
 
 As for playing with this sketch/code, you will need the JoyCon(s) to select the game in the Nintendo Switch and navigate in the menus and these things.
 When you want the Arduino to start sending data to your Nintendo Switch, press the button equivalent to the A from the bike. After that, you will be able to play from the bike :smile:.
