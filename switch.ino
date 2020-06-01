@@ -3,20 +3,12 @@ boolean shouldAccelerate(float freq) {
 }
 
 void sendGameData(float freq, float yaw) {
-  //TODO: Clean Up!
-  
-  digitalRead(pinButtonR);
-  digitalRead(pinButtonAdd);
-  digitalRead(pinButtonA);
-  digitalRead(pinButtonB);
-
   Joystick.setButton(4, pressOrReleaseValue(pinButtonL));   // L
   Joystick.setButton(5, pressOrReleaseValue(pinButtonR));   // R
   Joystick.setButton(9, pressOrReleaseValue(pinButtonAdd)); // +
   Joystick.setButton(1, pressOrReleaseValue(pinButtonB));   // B
   Joystick.setButton(2, (((digitalRead(pinButtonA) == LOW) || shouldAccelerate(freq))) ? 1 : 0); // A
   
-
 
   if (freq > 0) {
     // Move
@@ -39,7 +31,6 @@ void sendGameData(float freq, float yaw) {
     Joystick.setXAxis(128);
     Joystick.setYAxis(128);
   }
-  
   
   
   Joystick.sendState();
