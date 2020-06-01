@@ -32,7 +32,7 @@ These are the libraries that you need to download:
 ### Circuit
 General schematics:
 ![Fritzing Circuit](./FritzingProtoboard.png)
-You can also download the file for Fritzing with more details of the schematics in the [Fritzing Project site](https://fritzing.org/projects/real-bike-mario-kart-8-deluxe).
+You can also [download the file for Fritzing](https://fritzing.org/media/fritzing-repo/projects/r/real-bike-mario-kart-8-deluxe/fritzing/bike.fzz) with more details of the schematics in the [Fritzing Project site](https://fritzing.org/projects/real-bike-mario-kart-8-deluxe).
 
 In the front side there are the _GY-521_ almost right in the middle of the rotation (or at least enough like to detect the rotation well) and the buttons.
 ![Bike front side](./bikefrontside.png)
