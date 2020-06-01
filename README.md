@@ -1,5 +1,6 @@
 # Bike Mario Kart Project
 Play the Nintendo Switch racing game "Mario Kart 8 Deluxe" using a real bike.
+[Project in Arduino Hub](https://create.arduino.cc/projecthub/Martouta/real-bike-mario-kart-8-deluxe-f6537f)
 
 ## Setup
 Using a Linux OS with Arduino IDE 1.6.6 (or above). for Mac it must be very similar. For Windows not so much but it must be doable anyway.
