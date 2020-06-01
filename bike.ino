@@ -1,44 +1,58 @@
-#define pinLed 13
-#define pinHallSensor 3
+#define pinInterruptMPU 0
+#define pinHallSensor 8
+#define pinSpeedLED 13
+#define pinRotationLED 12
+#define pinButtonL 7
+#define pinButtonR 6
+#define pinButtonAdd 5
+#define pinButtonA 4
+#define pinButtonB 1
 
-double previousTimeMagnetDetected = 0;
-boolean beforeThereWasMagnet = false;
+#include <I2Cdev.h>
+#include <MPU6050_6Axis_MotionApps20.h>
+#include <Wire.h>
+
+#include <SwitchJoystick.h>
+
+SwitchJoystick_ Joystick;
+
+boolean gameStarted = false;
 
 void setup() {
-  pinMode(pinLed, OUTPUT);
+  pinMode(pinButtonL, INPUT);
+  pinMode(pinButtonR, INPUT);
+  pinMode(pinButtonAdd, INPUT);
+  pinMode(pinButtonA, INPUT);
+  pinMode(pinButtonB, INPUT);
+
   pinMode(pinHallSensor, INPUT);
-  Serial.begin(9600);
+  resetFrequency();
+
+  pinMode(pinSpeedLED, OUTPUT);
+  pinMode(pinRotationLED, OUTPUT);
+
+  Joystick.begin(false);
+
+  i2cSetup();
+  MPU6050Connect();
 }
 
 void loop() {
-  const unsigned int hallValue = digitalRead(pinHallSensor);
-
-  if(hallValue == LOW) {
-    digitalWrite(pinLed, HIGH);
-    if(previousTimeMagnetDetected == 0) {
-      previousTimeMagnetDetected = micros() / 1000.0;
-    } else {
-      if (!beforeThereWasMagnet) {
-        digitalWrite(pinLed, HIGH);
-  
-        const double currentTime = micros() / 1000.0;
-        
-        Serial.println(String("currentTime: ") + currentTime + " - previousTimeMagnetDetected: " + previousTimeMagnetDetected);
-        const double periodMillisBetweenRounds = currentTime - previousTimeMagnetDetected;
-        Serial.println(String("periodMillisBetweenRounds: ") + periodMillisBetweenRounds);
-        const double periodSecondsBetweenRounds = periodMillisBetweenRounds / 1000.0;
-        Serial.println(String("periodSecondsBetweenRounds: ") + periodSecondsBetweenRounds);
-        const double frequency = 1 / periodSecondsBetweenRounds;
-  
-        previousTimeMagnetDetected = currentTime;
-  
-        Serial.println(String("frequency: ") + frequency);
-        Serial.println("-----------------");
-      }
-    }
-    beforeThereWasMagnet = true;
+  // Wait for the A button to start playing.
+  if (gameStarted) {
+    sendGameData(((float) getSpeedFreq()), getYaw());
+    delay(50);
   } else {
-    digitalWrite(pinLed, LOW);
-    beforeThereWasMagnet = false;
+    digitalWrite(pinSpeedLED, LOW);
+    digitalWrite(pinRotationLED, HIGH);
+    delay(100);
+    gameStarted = (digitalRead(pinButtonA) == LOW);
+    if (gameStarted) {
+      digitalWrite(pinSpeedLED, HIGH);
+      digitalWrite(pinRotationLED, HIGH);
+      delay(100);
+      digitalWrite(pinSpeedLED, LOW);
+      digitalWrite(pinRotationLED, LOW);
+    }
   }
 }
