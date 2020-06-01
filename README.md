@@ -39,6 +39,7 @@ In the front side there are the _GY-521_ almost right in the middle of the rotat
 
 In the back side there is everything else in my case, but most of it doesn't matter where you put it, except for the magnet and the _hall effect sensor_ that must stay there in the back to detect the speed.
 ![Bike back side](./bikebackside.png)
+
 It is not obvious but in that grey/silver small 'wheel'/circle, that spins when the real bike wheel does, there is a small magnet that I neodymium added.
 What you see very close to it is the _hall effect sensor_, that detects when the magnet is in front of it and when it isn't. The red LED of the circuit should have light only when the magnet is being detected (outside of 'startup time' tho, when you are already playing :wink: ).
 
