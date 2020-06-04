@@ -1,5 +1,27 @@
+struct JoystickCoord {
+  int x;
+  int y;
+};
+
 boolean shouldAccelerate(float freq) {
   return freq >= 0.2; // Initial value :)
+}
+
+struct JoystickCoord leftJoystickValuesFromYaw(float yaw) {
+  float filteredYaw = yaw;
+  if(filteredYaw > 1.57079633) { // > 90 degrees
+    filteredYaw = 1.57079633;
+  } else if(filteredYaw < -1.57079633){ // < -90 degrees
+    filteredYaw = -1.57079633;
+  }
+
+  float u = 127.5 * sin(filteredYaw), 
+        v = 127.5 * cos(filteredYaw);
+
+  struct JoystickCoord leftJoystick;
+  leftJoystick.x = round(127.5 + u);
+  leftJoystick.y = round(127.5 - v);
+  return leftJoystick;
 }
 
 void sendGameData(float freq, float yaw) {
@@ -20,20 +42,10 @@ void sendGameData(float freq, float yaw) {
 
   if (freq > 0) {
     // Move
-    float filteredYaw = yaw;
-    if(filteredYaw > 1.57079633) { // > 90 degrees
-      filteredYaw = 1.57079633;
-    } else if(filteredYaw < -1.57079633){ // < -90 degrees
-      filteredYaw = -1.57079633;
-    }
-    
-    float u = 128 * sin(filteredYaw), 
-          v = 128 * cos(filteredYaw);
-    int x = 128 + ((int) u),
-        y = 128 - ((int) v);
+    struct JoystickCoord coords = leftJoystickValuesFromYaw(yaw);
 
-    Joystick.setXAxis(x);
-    Joystick.setYAxis(y);
+    Joystick.setXAxis(coords.x);
+    Joystick.setYAxis(coords.y);
   } else {
     // Stay in the center
     Joystick.setXAxis(128);
