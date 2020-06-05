@@ -1,12 +1,13 @@
 #define pinInterruptMPU 0
-#define pinHallSensor 8
-#define pinSpeedLED 13
-#define pinRotationLED 12
-#define pinButtonL 7
-#define pinButtonR 6
-#define pinButtonAdd 5
-#define pinButtonA 4
-#define pinButtonB 1
+#define pinButtonB      1
+#define pinButtonA      4
+#define pinButtonAdd    5
+#define pinButtonR      6
+#define pinButtonL      7
+#define pinHallSensor   8
+#define pinRotationLED  12
+#define pinSpeedLED     13
+
 
 #include <I2Cdev.h>
 #include <MPU6050_6Axis_MotionApps20.h>
