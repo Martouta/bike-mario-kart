@@ -1,12 +1,16 @@
 #define pinInterruptMPU 0
 #define pinButtonB      1
+// Pins 2 and 3 and for SCA and SCL of the MPU6050
 #define pinButtonA      4
 #define pinButtonAdd    5
 #define pinButtonR      6
 #define pinButtonL      7
 #define pinHallSensor   8
+#define pinSPTDLeftJS   9
 #define pinRotationLED  12
 #define pinSpeedLED     13
+#define pintLAnalogX    A0
+#define pintLAnalogY    A1
 
 
 #include <I2Cdev.h>
@@ -25,6 +29,10 @@ void setup() {
   pinMode(pinButtonAdd, INPUT);
   pinMode(pinButtonA, INPUT);
   pinMode(pinButtonB, INPUT);
+
+  pinMode(pintLAnalogX, INPUT);
+  pinMode(pintLAnalogY, INPUT);
+  pinMode(pinSPTDLeftJS, INPUT);
 
   pinMode(pinHallSensor, INPUT);
   resetFrequency();
