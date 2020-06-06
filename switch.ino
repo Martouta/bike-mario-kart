@@ -15,7 +15,9 @@ struct JoystickCoord leftJoystickValuesFromYaw(float yaw) {
     filteredYaw = -1.57079633;
   }
 
-  float u = 127.5 * sin(filteredYaw), 
+  filteredYaw = filteredYaw * 1.20; // Exaggerate Yaw :)
+
+  float u = 127.5 * sin(filteredYaw),
         v = 127.5 * cos(filteredYaw);
 
   struct JoystickCoord leftJoystick;
@@ -27,7 +29,7 @@ struct JoystickCoord leftJoystickValuesFromYaw(float yaw) {
 struct JoystickCoord leftJoystickValuesFromAnalogJS() {
   int xPosition = analogRead(A0),
       yPosition = analogRead(A1);
-  
+
   struct JoystickCoord leftJoystick;
   leftJoystick.x = map(xPosition, 0, 1023, 0, 255);
   leftJoystick.y = map(yPosition, 0, 1023, 0, 255);
@@ -38,7 +40,7 @@ struct JoystickCoord leftJoystickValuesFromAnalogJS() {
 void sendGameData(float freq, float yaw) {
   sendButtonsData(freq);
   sendLeftJoystickData(freq, yaw);
-  
+
   Joystick.sendState();
 }
 
