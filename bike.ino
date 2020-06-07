@@ -1,13 +1,14 @@
 #define JOYSTICKSHIELD true
 
 #ifdef JOYSTICKSHIELD
-  #define UP_BTN           2
-  #define RIGHT_BTN        3
-  #define DOWN_BTN         4
-  #define LEFT_BTN         5
-  #define E_BTN            6
-  #define F_BTN            7
-  #define JOYSTICK_BTN     8
+  #define UP_BTN          2
+  #define RIGHT_BTN       3
+  #define DOWN_BTN        4
+  #define LEFT_BTN        5
+  #define E_BTN           6
+  #define F_BTN           7
+  #define JOYSTICK_BTN    8
+  #define pinHallSensor   13
   #define JOYSTICK_AXIS_X A0
   #define JOYSTICK_AXIS_Y A1
   int buttons[] = {UP_BTN, DOWN_BTN, LEFT_BTN, RIGHT_BTN, E_BTN, F_BTN, JOYSTICK_BTN};
@@ -26,6 +27,7 @@
   #define pintLAnalogX    A0
   #define pintLAnalogY    A1
 #endif
+
 
 #include <I2Cdev.h>
 #include <MPU6050_6Axis_MotionApps20.h>
@@ -57,8 +59,8 @@ void setup() {
     MPU6050Connect();
   #endif
 
-  // pinMode(pinHallSensor, INPUT); // TODO: Uncomment ;)
-  // resetFrequency(); // TODO: Uncomment ;)
+  pinMode(pinHallSensor, INPUT);
+  resetFrequency();
   Joystick.begin(false);
 }
 
@@ -66,8 +68,7 @@ void loop() {
   // Wait for the A button to start playing.
   if (gameStarted) {
     #ifdef JOYSTICKSHIELD
-     // TODO: with the real frequency!!
-     sendGameDataFromJoystickShield();
+     sendGameDataFromJoystickShield((float) getSpeedFreq());
     #else
       sendGameData(((float) getSpeedFreq()), getYaw());
     #endif

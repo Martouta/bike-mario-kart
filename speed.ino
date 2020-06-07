@@ -4,7 +4,6 @@ double previousTimeMagnetDetected = 0;
 boolean beforeThereWasMagnet = false;
 double bikeFrequency = 0;
 
-#ifndef JOYSTICKSHIELD
 double getSpeedFreq() {
   updateSpeedFrequency();
   return bikeFrequency;
@@ -37,11 +36,13 @@ void updateSpeedFrequency() {
 }
 
 void updateSpeedLed(unsigned int hallValue) {
-  if(hallValue == LOW) {
-    digitalWrite(pinSpeedLED, HIGH);
-  } else {
-    digitalWrite(pinSpeedLED, LOW);
-  }
+  #ifndef JOYSTICKSHIELD
+    if(hallValue == LOW) {
+      digitalWrite(pinSpeedLED, HIGH);
+    } else {
+      digitalWrite(pinSpeedLED, LOW);
+    }
+  #endif
 }
 
 boolean isFirstTimeMagnetDetected() {
@@ -53,4 +54,3 @@ void resetFrequency() {
   previousTimeMagnetDetected = 0;
   beforeThereWasMagnet = false;
 }
-#endif

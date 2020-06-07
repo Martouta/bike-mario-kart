@@ -1,6 +1,6 @@
 #ifdef JOYSTICKSHIELD
-  void sendGameDataFromJoystickShield() {
-    Joystick.setButton(2, pressOrReleaseValue(RIGHT_BTN));    // A // TODO: Also accept real frequency!!
+  void sendGameDataFromJoystickShield(float freq) {
+    Joystick.setButton(2, (((digitalRead(RIGHT_BTN) == LOW) || shouldAccelerate(freq))) ? 1 : 0); // A
     Joystick.setButton(1, pressOrReleaseValue(DOWN_BTN));     // B
     Joystick.setButton(4, pressOrReleaseValue(LEFT_BTN));     // L
     Joystick.setButton(5, pressOrReleaseValue(UP_BTN));       // R

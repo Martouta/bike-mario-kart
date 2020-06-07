@@ -71,7 +71,7 @@
 #endif
 
 boolean shouldAccelerate(float freq) {
-  return freq >= 0.2; // Initial value :)
+  return freq >= 0.02; // Initial value :)
 }
 
 int pressOrReleaseValue(int button) {
