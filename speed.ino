@@ -4,6 +4,7 @@ double previousTimeMagnetDetected = 0;
 boolean beforeThereWasMagnet = false;
 double bikeFrequency = 0;
 
+#ifndef JOYSTICKSHIELD
 double getSpeedFreq() {
   updateSpeedFrequency();
   return bikeFrequency;
@@ -52,3 +53,4 @@ void resetFrequency() {
   previousTimeMagnetDetected = 0;
   beforeThereWasMagnet = false;
 }
+#endif
