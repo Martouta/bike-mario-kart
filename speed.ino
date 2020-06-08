@@ -36,11 +36,13 @@ void updateSpeedFrequency() {
 }
 
 void updateSpeedLed(unsigned int hallValue) {
-  if(hallValue == LOW) {
-    digitalWrite(pinSpeedLED, HIGH);
-  } else {
-    digitalWrite(pinSpeedLED, LOW);
-  }
+  #ifndef JOYSTICKSHIELD
+    if(hallValue == LOW) {
+      digitalWrite(pinSpeedLED, HIGH);
+    } else {
+      digitalWrite(pinSpeedLED, LOW);
+    }
+  #endif
 }
 
 boolean isFirstTimeMagnetDetected() {
