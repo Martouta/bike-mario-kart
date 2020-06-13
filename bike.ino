@@ -1,17 +1,12 @@
-#define JOYSTICKSHIELD true
+#include "config.h"
 
 #ifdef JOYSTICKSHIELD
-  #define UP_BTN          (uint8_t)2
-  #define RIGHT_BTN       (uint8_t)3
-  #define DOWN_BTN        (uint8_t)4
-  #define LEFT_BTN        (uint8_t)5
-  #define E_BTN           (uint8_t)6
-  #define F_BTN           (uint8_t)7
-  #define JOYSTICK_BTN    (uint8_t)8
+  #define pinButtonR      (uint8_t)2 // Up button
+  #define pinButtonA      (uint8_t)3 // Right button
+  #define pinButtonB      (uint8_t)4 // Down button
+  #define pinButtonL      (uint8_t)5 // Left button
+  #define pinButtonAdd    (uint8_t)7 // F button
   #define pinHallSensor   (uint8_t)13
-  #define JOYSTICK_AXIS_X (uint8_t)A0
-  #define JOYSTICK_AXIS_Y (uint8_t)A1
-  int buttons[] = {UP_BTN, DOWN_BTN, LEFT_BTN, RIGHT_BTN, E_BTN, F_BTN, JOYSTICK_BTN};
 #else
   #define pinInterruptMPU (uint8_t)0
   #define pinButtonB      (uint8_t)1
@@ -24,9 +19,11 @@
   #define pinSPTDLeftJS   (uint8_t)9
   #define pinRotationLED  (uint8_t)12
   #define pinSpeedLED     (uint8_t)13
-  #define pintLAnalogX    (uint8_t)A0
-  #define pintLAnalogY    (uint8_t)A1
 #endif
+
+const uint8_t buttons[] = { pinButtonR, pinButtonA, pinButtonB, pinButtonL, pinButtonAdd };
+#define pinLAnalogX    (uint8_t)A0
+#define pinLAnalogY    (uint8_t)A1
 
 
 #include <I2Cdev.h>
@@ -34,22 +31,16 @@
 #include <Wire.h>
 
 #include <SwitchJoystick.h>
-SwitchJoystick_ Joystick;
 
 boolean gameStarted = false;
 
 void setup() {
   #ifdef JOYSTICKSHIELD
-    for (int i; i < 7; i++) pinMode(buttons[i], INPUT_PULLUP);
+    for (int i = 0; i < 5; i++) pinMode(buttons[i], INPUT_PULLUP);
   #else
-    pinMode(pinButtonL, INPUT);
-    pinMode(pinButtonR, INPUT);
-    pinMode(pinButtonAdd, INPUT);
-    pinMode(pinButtonA, INPUT);
-    pinMode(pinButtonB, INPUT);
-
-    pinMode(pintLAnalogX, INPUT);
-    pinMode(pintLAnalogY, INPUT);
+    for (int i = 0; i < 5; i++) pinMode(buttons[i], INPUT);
+    pinMode(pinLAnalogX, INPUT);
+    pinMode(pinLAnalogY, INPUT);
     pinMode(pinSPTDLeftJS, INPUT);
 
     pinMode(pinSpeedLED, OUTPUT);
@@ -61,39 +52,32 @@ void setup() {
 
   pinMode(pinHallSensor, INPUT);
   resetFrequency();
-  Joystick.begin(false);
+  initializeSwitch();
+
+  #ifndef JOYSTICKSHIELD
+    updateLEDsGameUnstarted();
+  #endif
 }
 
 void loop() {
   // Wait for the A button to start playing.
   if (gameStarted) {
-    #ifdef JOYSTICKSHIELD
-     sendGameDataFromJoystickShield((float) getSpeedFreq());
-    #else
-      sendGameData(((float) getSpeedFreq()), getYaw());
-    #endif
+    updateGameData();
+    sendGameData();
     delay(50);
   } else {
-    #ifndef JOYSTICKSHIELD
-      digitalWrite(pinSpeedLED, LOW);
-      digitalWrite(pinRotationLED, HIGH);
-    #endif
-
+    updateGameStarted();
     delay(100);
-    #ifdef JOYSTICKSHIELD
-      gameStarted = (digitalRead(RIGHT_BTN) == LOW);
-    #else
-      gameStarted = (digitalRead(pinButtonA) == LOW);
-    #endif
-
-    #ifndef JOYSTICKSHIELD
-      if (gameStarted) {
-        digitalWrite(pinSpeedLED, HIGH);
-        digitalWrite(pinRotationLED, HIGH);
-        delay(100);
-        digitalWrite(pinSpeedLED, LOW);
-        digitalWrite(pinRotationLED, LOW);
-      }
-    #endif
   }
+}
+
+void updateGameStarted() {
+  gameStarted = checkGameStarted();
+  #ifndef JOYSTICKSHIELD
+    updateLEDsGameStarted(gameStarted);
+  #endif
+}
+
+boolean checkGameStarted() {
+  return (digitalRead(pinButtonA) == LOW);
 }
