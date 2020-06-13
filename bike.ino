@@ -35,12 +35,11 @@ const uint8_t buttons[] = { pinButtonR, pinButtonA, pinButtonB, pinButtonL, pinB
 boolean gameStarted = false;
 
 void setup() {
-  #ifdef JOYSTICKSHIELD
-    for (int i = 0; i < 5; i++) pinMode(buttons[i], INPUT_PULLUP);
-  #else
-    for (int i = 0; i < 5; i++) pinMode(buttons[i], INPUT);
-    pinMode(pinLAnalogX, INPUT);
-    pinMode(pinLAnalogY, INPUT);
+  for (int i = 0; i < 5; i++) pinMode(buttons[i], INPUT_PULLUP); // TODO: check what this implies when it isn't using the JoystickShield
+
+  #ifndef JOYSTICKSHIELD
+    // pinMode(pinLAnalogX, INPUT); // TODO: check what this implies when it isn't using the JoystickShield
+    // pinMode(pinLAnalogY, INPUT); // TODO: check what this implies when it isn't using the JoystickShield
     pinMode(pinSPTDLeftJS, INPUT);
 
     pinMode(pinSpeedLED, OUTPUT);
