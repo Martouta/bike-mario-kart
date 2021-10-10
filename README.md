@@ -22,18 +22,21 @@ These are the libraries that you need to download:
 - An AC adapter of 9V for the Arduino.
 - 4 small breadboards and 1 big one as well.
 - 5 push buttons of 4 legs each.
-- 2 LEDs.
-- 2 Resistors of 330Ω and 5 resistors of 10KΩ (although 5KΩ might be enough).
+- 3 LEDs.
+- 3 Resistors of 330Ω and 5 resistors of 10KΩ (although 5KΩ might be enough).
 - Cables to connect everything together. This can be done in many different ways but I bought long cables and cut them and strip them myself with the right size to then stick them to the big with some sticky tapes.
 - A Nintendo Switch. In my case with the Dock as well.
 - The game "Mario Kart 8 Deluxe" for the console.
 - USB cable of A type to connect to the laptop and micro type to connect to the Arduino. Then, I use the same cable to connect the Arduino to the Dock, but if you do not have the Dock, I guess that you will need an adapter or another cable to connect it directly to the Switch (which uses C type).
+- Joystick (usually sold as the one of the PS2).
+- SPTD Switch interruptor.
 
 
 ### Circuit
 General schematics:
 ![Fritzing Circuit](./FritzingProtoboard.png)
-You can also [download the file for Fritzing](https://fritzing.org/media/fritzing-repo/projects/r/real-bike-mario-kart-8-deluxe/fritzing/bike.fzz) with more details of the schematics in the [Fritzing Project site](https://fritzing.org/projects/real-bike-mario-kart-8-deluxe).
+You can also [download the file for Fritzing (release v1.0.0)](https://fritzing.org/media/fritzing-repo/projects/r/real-bike-mario-kart-8-deluxe/fritzing/bike.fzz) with more details of the schematics in the [Fritzing Project site](https://fritzing.org/projects/real-bike-mario-kart-8-deluxe).
+The most recent version is in this same project, in the file `bike.fzz`.
 
 In the front side there are the _GY-521_ almost right in the middle of the rotation (or at least enough like to detect the rotation well) and the buttons.
 ![Bike front side](./bikefrontside.png)

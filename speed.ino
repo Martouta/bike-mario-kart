@@ -12,7 +12,9 @@ double getSpeedFreq() {
 void updateSpeedFrequency() {
   const unsigned int hallValue = digitalRead(pinHallSensor);
 
-  updateSpeedLed(hallValue);
+  #ifndef JOYSTICKSHIELD
+    updateSpeedLed(hallValue);
+  #endif
 
   const double currentTime = millis();
   const double periodMillisBetweenRounds = currentTime - previousTimeMagnetDetected;
@@ -33,14 +35,6 @@ void updateSpeedFrequency() {
     }
   }
   beforeThereWasMagnet = !hallValue;
-}
-
-void updateSpeedLed(unsigned int hallValue) {
-  if(hallValue == LOW) {
-    digitalWrite(pinSpeedLED, HIGH);
-  } else {
-    digitalWrite(pinSpeedLED, LOW);
-  }
 }
 
 boolean isFirstTimeMagnetDetected() {
